@@ -27,7 +27,6 @@ class NmapSkill(MycroftSkill):
                 ports = nm[host][proto].keys()
                 for port in ports:
                     service = nm[host][proto][port]
-                    report = port, service['state'], service['name']
                     self.speak("port "+str(port)+" is "+service['state']+" exposing "+service['name'])
 
 def create_skill():
