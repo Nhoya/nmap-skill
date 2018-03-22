@@ -14,8 +14,8 @@ class NmapSkill(MycroftSkill):
 
 
     def handle_scan_intent(self, message):
-        self.speak('Scanning Target')
-        h = message.data.get('utterance').replace('scan ','')
+        h = message.data.get('utterance').replace('scan ','').replace(' ', '')
+        self.speak('Port scanner started on '+h)
         nm=nmap.PortScanner()
         nm.scan(h, arguments='-sT')
         if not nm.all_hosts():
