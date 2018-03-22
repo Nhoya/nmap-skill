@@ -1,5 +1,8 @@
 # skill-nmap
 nmap skill for Mycroft AI
 
+## Description
+Execute simple nmap scans
 
-just say `scan 127.0.0.1`
+## Examples 
+* "Hey Mycroft scan 127.0.0.1"
