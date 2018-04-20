@@ -13,20 +13,27 @@ class NmapSkill(MycroftSkill):
         self.register_intent(scan_intent, self.handle_scan_intent)
         
         local_scan = IntentBuilder("LocalScan"). \
-            require("LocalScanKeyword")
+            require("ScanKeyword").require("LocalNetworkKeyword").build()
         self.register_intent(local_scan, self.handle_local_scan)
 
-    def handle_scan_intent(self , message):
+        simple_local_scan = IntentBuilder("SimpleLocalScan"). \
+            require("SimpleScanKeyword").require("LocalNetworkKeyword").build()
+        self.register_intent(simple_local_scan, self.handle_simple_local_scan)
+
+    def handle_scan_intent(self, message):
         h = message.data.get('utterance').replace('scan ','').replace(' ', '')
-        self.nmap_scan(h)
+        self.nmap_scan(h, '-sT')
 
     def handle_local_scan(self, message):
-        self.nmap_scan("192.168.1.*")
+        self.nmap_scan("192.168.1.*", '-sT')
 
-    def nmap_scan(self,h):
+    def handle_simple_local_scan(self, message):
+        self.nmap_scan("192.168.1.*", '-sn')
+
+    def nmap_scan(self,h, args):
         self.speak("Scan started, this may take a while")
         nm=nmap.PortScanner()
-        nm.scan(h, arguments='-sT')
+        nm.scan(h, arguments=args)
         if not nm.all_hosts():
             self.speak("Unable to retrieve info on target")
             return
