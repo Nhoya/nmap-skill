@@ -22,13 +22,13 @@ class NmapSkill(MycroftSkill):
 
     def handle_scan_intent(self, message):
         h = message.data.get('utterance').replace('scan ','').replace(' ', '')
-        self.nmap_scan(h, '-sT')
+        self.nmap_scan(h, '-sT -A')
 
     def handle_local_scan(self, message):
-        self.nmap_scan("192.168.1.*", '-sT')
+        self.nmap_scan("192.168.1.*", '-sT -A')
 
     def handle_simple_local_scan(self, message):
-        self.nmap_scan("192.168.1.*", '-sn')
+        self.nmap_scan("192.168.1.*", '-sn -A')
 
     def nmap_scan(self,h, args):
         self.speak("Scan started, this may take a while")
@@ -38,7 +38,11 @@ class NmapSkill(MycroftSkill):
             self.speak("Unable to retrieve info on target")
             return
         for host in nm.all_hosts():
-            self.speak(host+" found")
+            hostname = nm[host].hostname()
+            if hostname != "":
+                self.speak(hostname+" found on "+host)
+            else:
+                self.speak(host+" found")
             for proto in nm[host].all_protocols():
                 ports = sorted(nm[host][proto].keys())
                 for port in ports:
