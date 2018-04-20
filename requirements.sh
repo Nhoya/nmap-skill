@@ -10,7 +10,7 @@ dependencies=( nmap )
 #setting dependencies and package manager in relation to the distribution
 if $(hash pkcon 2>/dev/null); then
     pm="pkcon install -y"
-    dependencies=( nmap liblinear1 )
+    dependencies=( nmap liblinear1 libblas3 )
 else
     priv="sudo"
     if [ "$dist"  == "\"Arch Linux\""  ]; then
