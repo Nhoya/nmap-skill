@@ -17,7 +17,7 @@ class NmapSkill(MycroftSkill):
         self.register_intent(local_scan, self.handle_local_scan)
 
         simple_local_scan = IntentBuilder("SimpleLocalScan"). \
-            require("SimpleScanKeyword").require("LocalNetworkKeyword").build()
+            require("SimpleKeyword").require("ScanKeyword").require("LocalNetworkKeyword").build()
         self.register_intent(simple_local_scan, self.handle_simple_local_scan)
 
     def handle_scan_intent(self, message):
