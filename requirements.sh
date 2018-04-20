@@ -8,7 +8,7 @@ dist=$(lsb_release -ds)
 
 #setting dependencies and package manager in relation to the distribution
 if $(hash pkcon 2>/dev/null); then
-    pm="pkcon"
+    pm="pkcon install -y"
 else
     priv="sudo"
     if [ "$dist"  == "\"Arch Linux\""  ]; then
